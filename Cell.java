@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 public class Cell implements ActionListener{
     //Variables you need to work with
-    int value;  
+    private int value;  
     //Variables you don't need to worry about or care about.
     private JButton button;
     /**
@@ -28,7 +28,11 @@ public class Cell implements ActionListener{
      * @return True if it is a bomb, otherwse false.
      */
     boolean isBomb(){
-        
+        if (value == -1){
+            return true;
+        }else{
+            return false;
+        }
     }
     //Additional Methods may be required. Please make them yourself.
     
@@ -47,6 +51,9 @@ public class Cell implements ActionListener{
     }
     public JButton getButton() {
         return button;
+    }
+    public int getValue(){
+        return value;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
