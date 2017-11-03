@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class MinesweeperBoard2{
     Cell[] board;
     int rows, columns;
-    //int value2 = Cell.getValue();
     public MinesweeperBoard2(int row, int column){
         //Put the constructor here.
         rows = row;
@@ -28,7 +27,24 @@ public class MinesweeperBoard2{
         this(10,10);
     }
     public void addBombs(int bombs) throws Exception{
-        
+        int[] bombIndex;
+        if (bombs >= rows*columns){
+            throw new RuntimeException();
+        }else{
+            bombIndex = new int[bombs];
+            int index;
+            for (int i = 0; i < bombs; i++){
+                index = (int)(Math.random() * rows * columns + 1);
+                if (!bombIndex.indexOf(index)){
+                    bombIndex[i] = index;
+                }else{
+                    while (bombIndex.indexOf(index)){
+                        index = (int)(Math.random() * rows * columns + 1);
+                    }
+                    bombIndex[i] = index;
+                }
+            }
+        }
     }
     public void addNums(){
         
@@ -39,7 +55,7 @@ public class MinesweeperBoard2{
     public void printBoard(){
         for (int i = 0; i < rows; i++){
             for (int j = 0; j < columns; j++){
-                System.out.print(0 + " ");
+                System.out.print(board[i*columns+j].getValue() + " ");
             }
             System.out.println();
         }
