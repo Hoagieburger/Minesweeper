@@ -24,25 +24,32 @@ public class MinesweeperBoard2{
         frame.setVisible(true);
     }
     public MinesweeperBoard2(){
-        this(10,10);
+        this(10,10); // Basic board size
     }
     public void addBombs(int bombs) throws Exception{
         int[] bombIndex;
-        if (bombs >= rows*columns){
+        if (bombs >= rows*columns && bombs < 1){
             throw new RuntimeException();
         }else{
             bombIndex = new int[bombs];
             int index;
-            for (int i = 0; i < bombs; i++){
+            // Confusing way of making sure no duplicate indices
+            for (int i = 0; i <= bombs; i++){
+                boolean usedIndex = false,r = true;
                 index = (int)(Math.random() * rows * columns + 1);
-                if (!bombIndex.indexOf(index)){
-                    bombIndex[i] = index;
-                }else{
-                    while (bombIndex.indexOf(index)){
-                        index = (int)(Math.random() * rows * columns + 1);
+                while (r){
+                    for (int j = 0; j < bombIndex.length; j++){
+                        if (bombIndex[j] == index){
+                            usedIndex = true;
+                        }
                     }
-                    bombIndex[i] = index;
+                    if (usedIndex){
+                        index = (int)(Math.random() * rows * columns + 1);
+                    }else{
+                        r = false;
+                    }
                 }
+                board[index].changeValue(-1);
             }
         }
     }
@@ -55,7 +62,12 @@ public class MinesweeperBoard2{
     public void printBoard(){
         for (int i = 0; i < rows; i++){
             for (int j = 0; j < columns; j++){
-                System.out.print(board[i*columns+j].getValue() + " ");
+                int value2 = board[i*columns+j].getValue();
+                if (value2 < 0){
+                    System.out.print("X ");
+                }else{
+                    System.out.print(value2 + " ");
+                }
             }
             System.out.println();
         }

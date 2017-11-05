@@ -55,6 +55,9 @@ public class Cell implements ActionListener{
     public int getValue(){
         return value;
     }
+    public void changeValue(int newValue){
+        value = newValue;
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         checkCell();
