@@ -35,9 +35,10 @@ public class MinesweeperBoard2{
             int index;
             // Confusing way of making sure no duplicate indices
             for (int i = 0; i < bombs; i++){
-                boolean usedIndex = false,r = true;
+                boolean r = true;
                 index = (int)(Math.random() * rows * columns);
                 while (r){
+                    boolean usedIndex = false;
                     for (int j = 0; j < bombIndex.length; j++){
                         if (bombIndex[j] == index){
                             usedIndex = true;
@@ -49,76 +50,146 @@ public class MinesweeperBoard2{
                         r = false;
                     }
                 }
+                bombIndex[i] = index;
                 board[index].changeValue(-1);
             }
         }
     }
     public void addNums(){
+        int[] leftColumnIndex;
+        int[] rightColumnIndex;
         for (int i = 0; i < board.length; i++){
             int adjacentBombs = 0;
             if (board[i].getValue() != -1){
                 if (i == 0){ // Assigning top-left corner
                     if (board[1].getValue() == -1){
                         adjacentBombs++;
-                    }if (board[columns].getValue() == -1){
+                    }
+                    if (board[columns].getValue() == -1){
                         adjacentBombs++;
-                    }if (board[columns + 1].getValue() == -1){
+                    }
+                    if (board[columns + 1].getValue() == -1){
                         adjacentBombs++;
                     }
                 }else if (i == columns - 1){ // Assigning top-right corner
                     if (board[i - 1].getValue() == -1){
                         adjacentBombs++;
-                    }if (board[2 * columns - 1].getValue() == -1){
+                    }
+                    if (board[2 * columns - 1].getValue() == -1){
                         adjacentBombs++;
-                    }if (board[2 * columns - 2].getValue() == -1){
+                    }
+                    if (board[2 * columns - 2].getValue() == -1){
                         adjacentBombs++;
                     }
                 }else if (i == rows * columns - 1){ // Assigning bottom-right corner
                     if (board[i - 1].getValue() == -1){
                         adjacentBombs++;
-                    }if (board[columns * (rows - 2)].getValue() == -1){
+                    }
+                    if (board[columns * (rows - 2)].getValue() == -1){
                         adjacentBombs++;
-                    }if (board[columns * (rows - 2) + 1].getValue() == -1){
+                    }
+                    if (board[columns * (rows - 2) + 1].getValue() == -1){
                         adjacentBombs++;
                     }
                 }else if (i == columns * (rows - 1)){ // Assigning bottom-left corner
                     if (board[i - 1].getValue() == -1){
                         adjacentBombs++;
-                    }if (board[columns * (rows - 1) -1].getValue() == - 1){
+                    }
+                    if (board[columns * (rows - 1) -1].getValue() == - 1){
                         adjacentBombs++;
-                    }if (board[columns * (rows - 1) -1].getValue() == - 2){
+                    }
+                    if (board[columns * (rows - 1) -1].getValue() == - 2){
                         adjacentBombs++;
                     }
                 }else if (i > 0 && i < columns){ // Assigning rest of top row
                     if (board[i - 1].getValue() == -1){
                         adjacentBombs++;
-                    }if (board[i + 1].getValue() == -1){
-                        adjacentBombs++;
-                    }if (board[i - 1 + columns].getValue() == -1){
-                        adjacentBombs++;
-                    }if (board[i + columns].getValue() == -1){
-                        adjacentBombs++;
-                    }if (board[i + 1 + columns].getValue() == -1){
+                    }
+                    if (board[i + 1].getValue() == -1){
                         adjacentBombs++;
                     }
-                }else if (i < board.length - 1 && i > (rows - 1) * (columns - 1)){ // Assigning rest of bottom row
+                    if (board[i - 1 + columns].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                    if (board[i + columns].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                    if (board[i + 1 + columns].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                }else if (i < board.length - 1 && i > (rows - 1) * columns){ // Assigning rest of bottom row
                     if (board[i - 1].getValue() == -1){
                         adjacentBombs++;
-                    }if (board[i + 1].getValue() == -1){
-                        adjacentBombs++;
-                    }if (board[i - 1 - columns].getValue() == -1){
-                        adjacentBombs++;
-                    }if (board[i - columns].getValue() == -1){
-                        adjacentBombs++;
-                    }if (board[i + 1 - columns].getValue() == -1){
+                    }
+                    if (board[i + 1].getValue() == -1){
                         adjacentBombs++;
                     }
-                }else if (true){ // Assigning rest of left column
-                    
-                }else if (true){ // Assigning rest of right column
-                    
+                    if (board[i - 1 - columns].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                    if (board[i - columns].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                    if (board[i + 1 - columns].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                }else if (i % columns == 0){ // Assigning rest of left column
+                    if (board[i + columns].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                    if (board[i + 1 + columns].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                    if (board[i + 1].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                    if (board[i - columns].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                    if (board[i + 1 - columns].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                }else if (i % (columns - 1) == 0){ // Assigning rest of right column
+                    if (board[i - 1].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                    if (board[i - 1 - columns].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                    if (board[i - columns].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                    if (board[i - 1 + columns].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                    if (board[i + columns].getValue() == -1){
+                        adjacentBombs++;
+                    }
                 }else{
-                    
+                    if (board[i - 1].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                    if (board[i + 1].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                    if (board[i - 1 - columns].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                    if (board[i - columns].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                    if (board[i + 1 - columns].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                    if (board[i - 1 + columns].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                    if (board[i + columns].getValue() == -1){
+                        adjacentBombs++;
+                    }
+                    if (board[i + 1 + columns].getValue() == -1){
+                        adjacentBombs++;
+                    }
                 }
                 board[i].changeValue(adjacentBombs);
             }
