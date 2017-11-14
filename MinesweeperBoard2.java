@@ -59,13 +59,13 @@ public class MinesweeperBoard2{
         for (int i = 0; i < board.length; i++){
             int adjacentBombs = 0;
             boolean inLeftColumn = false, inRightColumn = false;
-            for (int j = 0; (columns * j) < (rows * columns); j++){
+            for (int j = 0; (columns * j) < ((rows - 1) * columns); j++){
                 if (i == columns * j){
                     inLeftColumn = true;
                 }
             }
-            for (int j = 0; ((columns - 1) * (rows * i)) < (rows * columns); i++){
-                if (i == (columns - 1) * (rows * j)){
+            for (int j = 0; ((columns - 1) * (rows * j)) < (rows * columns); j++){
+                if (j == (columns - 1) * (rows * j)){
                     inRightColumn = true;
                 }
             }
@@ -90,7 +90,7 @@ public class MinesweeperBoard2{
                     if (board[2 * columns - 2].getValue() == -1){
                         adjacentBombs++;
                     }
-                }else if (i == rows * columns - 1){ // Assigning bottom-right corner
+                }else if (i == board.length - 1){ // Assigning bottom-right corner
                     if (board[i - 1].getValue() == -1){
                         adjacentBombs++;
                     }
@@ -110,7 +110,7 @@ public class MinesweeperBoard2{
                     if (board[columns * (rows - 1) -1].getValue() == - 2){
                         adjacentBombs++;
                     }
-                }else if (i > 0 && i < columns){ // Assigning rest of top row
+                }else if (i > 0 && i < columns - 1){ // Assigning rest of top row
                     if (board[i - 1].getValue() == -1){
                         adjacentBombs++;
                     }
