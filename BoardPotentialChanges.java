@@ -8,10 +8,10 @@ import java.lang.Math;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-public class MinesweeperBoard2{
+public class BoardPotentialChanges{
     Cell[] board;
     int rows, columns;
-    public MinesweeperBoard2(int row, int column){
+    public BoardPotentialChanges(int row, int column){
         //Put the constructor here.
         rows = row;
         columns = column;
@@ -23,7 +23,7 @@ public class MinesweeperBoard2{
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
-    public MinesweeperBoard2(){
+    public BoardPotentialChanges(){
         this(10,10); // Basic board size
     }
     public void addBombs(int bombs) throws Exception{
