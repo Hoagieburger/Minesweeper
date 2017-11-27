@@ -95,13 +95,15 @@ public class BoardPotentialChanges{
      */
     public void printBoard(){
         for (int i = 0; i < rows; i++){
-            for (int j = 0; j < columns; j++){
+            int j = 0;
+            while (j < columns){
                 int val = board[i*columns+j].getValue();
                 if (val < 0){
                     System.out.print("X ");
                 }else{
                     System.out.print(val + " ");
                 }
+                j++;
             }
             System.out.println();
         }
