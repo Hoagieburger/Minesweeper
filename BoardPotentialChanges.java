@@ -90,6 +90,9 @@ public class BoardPotentialChanges{
             }
         }
     }
+    public void checkAdjacent(){
+        // Create a thing to check if adjacent cells are clear like normal minewsweeper
+    }
     /**This method is used for testing and will be deleted if using the GUI.
      *  It is still required for all students.
      */

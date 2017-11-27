@@ -28,6 +28,7 @@ public class MinesweeperBoard2{
     }
     public void addBombs(int bombs) throws Exception{
         if (bombs >= rows*columns && bombs < 1){
+            System.out.println("Please quit the program and restart. Next time enter a valid integer.");
             throw new RuntimeException();
         }else{
             for (int i = 0; i < bombs; i++){
@@ -90,7 +91,7 @@ public class MinesweeperBoard2{
             }
         }
     }
-    /**This method is used for testing and will be deleted if using the GUI.
+    /**This method is used for testing and will be deleted if using the GUI.    
      *  It is still required for all students.
      */
     public void printBoard(){
