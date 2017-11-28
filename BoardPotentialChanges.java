@@ -9,16 +9,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 public class BoardPotentialChanges{
-    Cell[] board;
+    PotentialCellChanges[] board;
     int rows, columns;
     public BoardPotentialChanges(int row, int column){
         //Put the constructor here.
         rows = row;
         columns = column;
-        board = new Cell[rows * columns];
+        board = new PotentialCellChanges[rows * columns];
         //These pieces are for the GUI.
         JFrame frame = new JFrame();
-        frame.add(addCells());   
+        frame.add(addPotentialCellChangess());   
         frame.pack();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -90,8 +90,50 @@ public class BoardPotentialChanges{
             }
         }
     }
-    public void checkAdjacent(){
-        // Create a thing to check if adjacent cells are clear like normal minewsweeper
+    public void checkAdjacent(int pos){
+        int i = pos;
+        if (board[i].getValue() == 0){
+                if (i - 1 > 0){
+                    if (board[i - 1].getValue() == 0 && i % columns != 0){
+                        board[i - 1].checkPotentialCellChanges();
+                    }
+                }
+                if (i + 1 < rows * columns){    
+                    if (board[i + 1].getValue() == 0 && (i + 1) % columns != 0){
+                        board[i + 1].checkPotentialCellChanges();
+                    }
+                }    
+                if (i - 1 - columns > 0){
+                    if (board[i - 1 - columns].getValue() == 0 && i % columns != 0){
+                        board[i - 1 - columns].checkPotentialCellChanges();
+                    }
+                }
+                if (i - columns > 0){
+                    if (board[i - columns].getValue() == 0){
+                        board[i - columns].checkPotentialCellChanges();
+                    }
+                }
+                if (i + 1 - columns > 0){
+                    if (board[i + 1 - columns].getValue() == 0 && (i + 1) % columns != 0){
+                        board[i + 1 - columns].checkPotentialCellChanges();
+                    }
+                }
+                if (i - 1 + columns < rows * columns){
+                    if (board[i - 1 + columns].getValue() == 0 && i % columns != 0){
+                        board[i - 1 + columns].checkPotentialCellChanges();
+                    }
+                }
+                if (i + columns < rows * columns){
+                    if (board[i + columns].getValue() == 0){
+                        board[i + columns].checkPotentialCellChanges();
+                    }
+                }
+                if (i + 1 + columns < rows * columns){
+                    if (board[i + 1 + columns].getValue() == 0 && (i + 1) % columns != 0){
+                        board[i + 1 + columns].checkPotentialCellChanges();
+                    }
+                }
+            }
     }
     /**This method is used for testing and will be deleted if using the GUI.
      *  It is still required for all students.
@@ -111,10 +153,10 @@ public class BoardPotentialChanges{
             System.out.println();
         }
     }
-    public JPanel addCells(){
+    public JPanel addPotentialCellChangess(){
         JPanel panel = new JPanel(new GridLayout(rows,columns));
         for(int i = 0; i< rows*columns; i++){
-            board[i]= new Cell();
+            board[i]= new PotentialCellChanges(i);
             panel.add(board[i].getButton());
         }
         return panel;
