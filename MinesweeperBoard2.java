@@ -9,13 +9,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 public class MinesweeperBoard2{
-    Cell[] board;
+    Cell[][] board;
     int rows, columns;
     public MinesweeperBoard2(int row, int column){
         //Put the constructor here.
         rows = row;
         columns = column;
-        board = new Cell[rows * columns];
+        board = new Cell[rows][columns];
         //These pieces are for the GUI.
         JFrame frame = new JFrame();
         frame.add(addCells());   
@@ -23,9 +23,11 @@ public class MinesweeperBoard2{
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
+
     public MinesweeperBoard2(){
         this(10,10); // Basic board size
     }
+
     public void addBombs(int bombs) throws Exception{
         if (bombs >= rows*columns && bombs < 1){
             System.out.println("Please quit the program and restart. Next time enter a valid integer.");
@@ -34,86 +36,92 @@ public class MinesweeperBoard2{
             for (int i = 0; i < bombs; i++){
                 boolean placed = false;
                 while (!placed){
-                    int index = (int)(Math.random() * rows * columns);
-                    if (board[index].getValue() == 0){
-                        board[index].changeValue(-1);
+                    int r = (int)(Math.random() * rows);
+                    int c = (int)(Math.random() * columns);
+                    if (board[r][c].getValue() == 0){
+                        board[r][c].changeValue(-1);
                         placed = true;
                     }
                 }
             }
         }
     }
+
     public void addNums(){
-        for (int i = 0; i < board.length; i++){
-            int adjacentBombs = 0;
-            if (board[i].getValue() >= 0){
-                if (i - 1 > 0){
-                    if (board[i - 1].getValue() == -1 && i % columns != 0){
-                        adjacentBombs++;
+        for (int i = 0; i < rows; i++){
+            for (int j = 0; j < columns; j++){
+                int adjacentBombs = 0;
+                if (board[i][j].getValue() >= 0){ // Checks if current cell is a bomb
+                    if (j - 1 >= 0){ // Cell to the left
+                        if (board[i][j - 1].getValue() == -1 && j != 0){
+                            adjacentBombs++;
+                        }
                     }
+                    if (j + 1 < columns){ // Cell to the right
+                        if (board[i][j + 1].getValue() == -1 && j != columns - 1){
+                            adjacentBombs++;
+                        }
+                    }    
+                    if (i - 1 >= 0 && j - 1 >= 0){ // Cell to the upper left
+                        if (board[i - 1][j - 1].getValue() == -1 && i != 0 && j != 0){
+                            adjacentBombs++;
+                        }
+                    }
+                    if (i - 1 >= 0){ // Cell above
+                        if (board[i - 1][j].getValue() == -1){
+                            adjacentBombs++;
+                        }
+                    }
+                    if (i - 1 >= 0 && j + 1 < columns){ // Cell to the upper right
+                        if (board[i - 1][j + 1].getValue() == -1 && j != columns - 1){
+                            adjacentBombs++;
+                        }
+                    }
+                    if (j - 1 >= 0 && i + 1 < rows){ // Cell to the lower left
+                        if (board[i + 1][j - 1].getValue() == -1 && j != 0){
+                            adjacentBombs++;
+                        }
+                    }
+                    if (i + columns < rows * columns){
+                        if (board[i + columns].getValue() == -1){
+                            adjacentBombs++;
+                        }
+                    }
+                    if (i + 1 + columns < rows * columns){
+                        if (board[i + 1 + columns].getValue() == -1 && (i + 1) % columns != 0){
+                            adjacentBombs++;
+                        }
+                    }
+                    board[i][j].changeValue(adjacentBombs);
                 }
-                if (i + 1 < rows * columns){    
-                    if (board[i + 1].getValue() == -1 && (i + 1) % columns != 0){
-                        adjacentBombs++;
-                    }
-                }    
-                if (i - 1 - columns > 0){
-                    if (board[i - 1 - columns].getValue() == -1 && i % columns != 0){
-                        adjacentBombs++;
-                    }
-                }
-                if (i - columns > 0){
-                    if (board[i - columns].getValue() == -1){
-                        adjacentBombs++;
-                    }
-                }
-                if (i + 1 - columns > 0){
-                    if (board[i + 1 - columns].getValue() == -1 && (i + 1) % columns != 0){
-                        adjacentBombs++;
-                    }
-                }
-                if (i - 1 + columns < rows * columns){
-                    if (board[i - 1 + columns].getValue() == -1 && i % columns != 0){
-                        adjacentBombs++;
-                    }
-                }
-                if (i + columns < rows * columns){
-                    if (board[i + columns].getValue() == -1){
-                        adjacentBombs++;
-                    }
-                }
-                if (i + 1 + columns < rows * columns){
-                    if (board[i + 1 + columns].getValue() == -1 && (i + 1) % columns != 0){
-                        adjacentBombs++;
-                    }
-                }
-                board[i].changeValue(adjacentBombs);
             }
         }
     }
+
     /**This method is used for testing and will be deleted if using the GUI.    
      *  It is still required for all students.
      */
     public void printBoard(){
         for (int i = 0; i < rows; i++){
-            int j = 0;
-            while (j < columns){
-                int val = board[i*columns+j].getValue();
+            for (int j = 0; j < columns; j++){
+                int val = board[i][j].getValue();
                 if (val < 0){
                     System.out.print("X ");
                 }else{
                     System.out.print(val + " ");
                 }
-                j++;
             }
             System.out.println();
         }
     }
+
     public JPanel addCells(){
         JPanel panel = new JPanel(new GridLayout(rows,columns));
-        for(int i = 0; i< rows*columns; i++){
-            board[i]= new Cell();
-            panel.add(board[i].getButton());
+        for(int i = 0; i< rows; i++){
+            for (int j = 0; j < columns; j++){
+                board[i][j] = new Cell();
+                panel.add(board[i][j].getButton());
+            }
         }
         return panel;
     }
