@@ -23,7 +23,6 @@ public class Cell implements ActionListener{
         button.setMargin(new Insets(0,0,0,0));
         value = 0;
     }
-
     /** This Method tells me if the cell is a bomb.
      * 
      * @return True if it is a bomb, otherwse false.
@@ -42,7 +41,6 @@ public class Cell implements ActionListener{
         button.setEnabled(false);
         displayValue();
     }
-
     public void displayValue(){
         if(this.isBomb()){
             button.setText("\u2600");
@@ -51,19 +49,15 @@ public class Cell implements ActionListener{
             button.setText(String.valueOf(value));
         }
     }
-
     public JButton getButton() {
         return button;
     }
-
     public int getValue(){
         return value;
     }
-
     public void changeValue(int newValue){
         value = newValue;
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         checkCell();

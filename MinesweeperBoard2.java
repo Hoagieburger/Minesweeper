@@ -23,11 +23,9 @@ public class MinesweeperBoard2{
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
-
     public MinesweeperBoard2(){
         this(10,10); // Basic board size
     }
-
     public void addBombs(int bombs) throws Exception{
         if (bombs >= rows*columns && bombs < 1){
             System.out.println("Please quit the program and restart. Next time enter a valid integer.");
@@ -46,24 +44,23 @@ public class MinesweeperBoard2{
             }
         }
     }
-
     public void addNums(){
         for (int i = 0; i < rows; i++){
             for (int j = 0; j < columns; j++){
                 int adjacentBombs = 0;
                 if (board[i][j].getValue() >= 0){ // Checks if current cell is a bomb
                     if (j - 1 >= 0){ // Cell to the left
-                        if (board[i][j - 1].getValue() == -1 && j != 0){
+                        if (board[i][j - 1].getValue() == -1){
                             adjacentBombs++;
                         }
                     }
                     if (j + 1 < columns){ // Cell to the right
-                        if (board[i][j + 1].getValue() == -1 && j != columns - 1){
+                        if (board[i][j + 1].getValue() == -1){
                             adjacentBombs++;
                         }
                     }    
                     if (i - 1 >= 0 && j - 1 >= 0){ // Cell to the upper left
-                        if (board[i - 1][j - 1].getValue() == -1 && i != 0 && j != 0){
+                        if (board[i - 1][j - 1].getValue() == -1){
                             adjacentBombs++;
                         }
                     }
@@ -73,22 +70,22 @@ public class MinesweeperBoard2{
                         }
                     }
                     if (i - 1 >= 0 && j + 1 < columns){ // Cell to the upper right
-                        if (board[i - 1][j + 1].getValue() == -1 && j != columns - 1){
+                        if (board[i - 1][j + 1].getValue() == -1){
                             adjacentBombs++;
                         }
                     }
                     if (j - 1 >= 0 && i + 1 < rows){ // Cell to the lower left
-                        if (board[i + 1][j - 1].getValue() == -1 && j != 0){
+                        if (board[i + 1][j - 1].getValue() == -1){
                             adjacentBombs++;
                         }
                     }
-                    if (i + columns < rows * columns){
-                        if (board[i + columns].getValue() == -1){
+                    if (i + 1 < rows){ // Cell underneath
+                        if (board[i + 1][j].getValue() == -1){
                             adjacentBombs++;
                         }
                     }
-                    if (i + 1 + columns < rows * columns){
-                        if (board[i + 1 + columns].getValue() == -1 && (i + 1) % columns != 0){
+                    if (i + 1 < rows && j + 1 < columns){ // Cell to the lower right
+                        if (board[i + 1][j + 1].getValue() == -1){
                             adjacentBombs++;
                         }
                     }
@@ -97,7 +94,6 @@ public class MinesweeperBoard2{
             }
         }
     }
-
     /**This method is used for testing and will be deleted if using the GUI.    
      *  It is still required for all students.
      */
@@ -114,7 +110,6 @@ public class MinesweeperBoard2{
             System.out.println();
         }
     }
-
     public JPanel addCells(){
         JPanel panel = new JPanel(new GridLayout(rows,columns));
         for(int i = 0; i< rows; i++){
@@ -125,4 +120,9 @@ public class MinesweeperBoard2{
         }
         return panel;
     }
+    /*
+     * public void unveilSurrounding(){
+     *  
+     *  }
+     */
 }
